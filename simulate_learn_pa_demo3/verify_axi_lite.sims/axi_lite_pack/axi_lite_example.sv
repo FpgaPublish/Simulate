@@ -200,5 +200,17 @@ axi_lite_slaver_v1_0_S00_AXI#(
     .S_AXI_RREADY                             ( axi0.AXI_RREADY   )
 );
 
+property p_check_slaver_ready;
+    @(posedge axi0.AXI_ACLK)        $rose(axi0.AXI_AWREADY) |-> 
+    ##[1:2] (~axi0.AXI_AWVALID) and $rose(axi0.AXI_WREADY)  |-> 
+    ##[1:2] (~axi0.AXI_WVALID)  and $rose(axi0.AXI_BREADY)  |-> 
+    ##[1:2] (~axi0.AXI_BVALID)  and $rose(axi0.AXI_ARREADY) |-> 
+    ##[1:2] (~axi0.AXI_ARVALID) and $rose(axi0.AXI_RREADY)  |-> 
+    ##[1:2] (~axi0.AXI_RVALID);
+endproperty
+
+a_shake: assert property(p_check_slaver_ready) else $display("error in shake");
+
+
 
 endmodule
