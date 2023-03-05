@@ -2,7 +2,7 @@
 `define FRAME_DRIVER_SV
 
 class frame_driver extends uvm_driver #(frame_seq_item);
-    virtual frame_interface vif = null;
+    virtual shk_interface vif = null;
  
     `uvm_component_utils(frame_driver)
  

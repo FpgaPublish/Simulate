@@ -1,4 +1,4 @@
-`include "./frame_testcase/frame_env/frame_agent/frame_interface.sv"
+`include "./frame_testcase/frame_env/frame_agent/shk_interface.sv"
 `include "./frame_testcase/frame_env/frame_agent/frame_sequencer/frame_seq_item.sv"
 `include "./frame_testcase/frame_env/frame_agent/frame_sequencer/frame_seq.sv"
 `include "./frame_testcase/frame_env/frame_agent/frame_sequencer/frame_sequencer.sv"

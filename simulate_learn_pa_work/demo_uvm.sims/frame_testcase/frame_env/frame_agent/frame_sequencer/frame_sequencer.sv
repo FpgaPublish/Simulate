@@ -1,7 +1,7 @@
 `ifndef FRAME_SEQUENCER_SV
 `define FRAME_SEQUENCER_SV
 
-class frame_sequencer extends uvm_sequencer #(amp_seq_item);
+class frame_sequencer extends uvm_sequencer #(frame_seq_item);
     `uvm_component_utils(frame_sequencer)
  
     extern function new(string name = "frame_sequencer", uvm_component parent = null);

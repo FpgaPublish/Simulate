@@ -2,7 +2,7 @@
 `define FRAME_AGENT_SV
 
 class frame_agent extends uvm_agent;
-    virtual frame_interface vif;
+    virtual shk_interface vif;
  
     frame_sequencer   sqr;
     frame_driver      drv;
@@ -23,7 +23,7 @@ endfunction : new
 function void frame_agent::build_phase(uvm_phase phase);
     super.build_phase(phase);
  
-    if(!uvm_config_db #(virtual frame_interface)::get(this, "", "vif", vif))
+    if(!uvm_config_db #(virtual shk_interface)::get(this, "", "vif", vif))
         `uvm_error("NO VIF", {"virtual interface must be set for: ", get_full_name()})
  
     mon = frame_monitor::type_id::create("mon", this);

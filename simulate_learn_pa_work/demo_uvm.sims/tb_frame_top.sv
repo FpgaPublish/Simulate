@@ -1,11 +1,11 @@
 `timescale 1ps / 1ps
 
-import uvm_pkg::*;
 `include "uvm_pkg.sv"
+import uvm_pkg::*;
 `include "uvm_macros.svh"
 `include "frame_pkg.svh"
 
-module uvm_frame_top #(
+module tb_frame_top #(
     
    )(
     
@@ -30,20 +30,20 @@ module uvm_frame_top #(
     initial 
     begin
         uvm_config_db#(
-            virtual frame_interface
+            virtual shk_interface
         )::set(
             null,
             "uvm_test_top.env.i_agt",
             "vif",
-            itf
+            u_shk_interface
         );
         uvm_config_db#(
-            virtual frame_interface
+            virtual shk_interface
         )::set(
             null,
-            "uvm_test_top.env.o_agt",
+            "uvm_test_top.env.o_agt", //default top
             "vif",
-            itf
+            u_shk_interface
         );
             
     end
