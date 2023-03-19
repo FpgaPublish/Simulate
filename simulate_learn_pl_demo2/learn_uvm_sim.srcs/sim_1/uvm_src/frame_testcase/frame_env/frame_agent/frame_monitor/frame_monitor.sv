@@ -17,7 +17,7 @@
 // Additional Comments:
 // 
 // ***********************************************************************************
-
+`include "uvm_macros.svh"
 `ifndef FRAME_MONITOR_SV
 `define FRAME_MONITOR_SV
 

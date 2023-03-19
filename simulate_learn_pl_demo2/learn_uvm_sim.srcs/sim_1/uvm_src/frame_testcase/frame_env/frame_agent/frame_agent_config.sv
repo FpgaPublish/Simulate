@@ -17,7 +17,7 @@
 // Additional Comments:
 // 
 // ***********************************************************************************
-
+`include "uvm_macros.svh"
 `ifndef FRAME_MASTER_AGENT_CONFIG_SV
 `define FRAME_MASTER_AGENT_CONFIG_SV
 

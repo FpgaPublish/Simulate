@@ -1,3 +1,4 @@
+//`include "uvm_macros.svh"
 `ifndef FRAME_SEQUENCER_SV
 `define FRAME_SEQUENCER_SV
 

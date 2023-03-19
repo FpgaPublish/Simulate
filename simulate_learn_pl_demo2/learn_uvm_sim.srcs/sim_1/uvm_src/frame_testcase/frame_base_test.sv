@@ -70,7 +70,6 @@ function void frame_base_test::end_of_elaboration_phase(uvm_phase phase);
 
     `uvm_info(get_type_name(), $sformatf("Verbosity level is set to: %d", get_report_verbosity_level()), UVM_LOW) //info report
 
-    factory.print(); //print it
 
 endfunction : end_of_elaboration_phase
 

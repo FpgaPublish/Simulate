@@ -1,3 +1,4 @@
+`include "uvm_macros.svh"
 `ifndef FRAME_AGENT_SV
 `define FRAME_AGENT_SV
 

@@ -2,9 +2,9 @@
 // Company: Fpga Publish
 // Engineer: F 
 // 
-// Create Date: 2023/03/07 22:55:33
+// Create Date: 2023/03/07 22:53:34
 // Design Name: 
-// Module Name: frame_monitor
+// Module Name: frame_driver
 // Project Name: 
 // Target Devices: ZYNQ7010 & XAUG
 // Tool Versions: 2021.1
@@ -17,22 +17,23 @@
 // Additional Comments:
 // 
 // ***********************************************************************************
+//`include "uvm_macros.svh"
+`ifndef FRAME_DRIVER_SV
+`define FRAME_DRIVER_SV
 
-`ifndef FRAME_MONITOR_SV
-`define FRAME_MONITOR_SV
-
-class frame_monitor extends uvm_monitor;
+class frame_driver extends uvm_driver #(frame_seq_item);
     virtual shk_interface vif = null;
  
-    `uvm_component_utils(frame_monitor)
+    `uvm_component_utils(frame_driver) //init driver
  
-    extern function new(string name = "frame_monitor", uvm_component parent = null);
-endclass : frame_monitor
+    extern function new(string name = "frame_driver", uvm_component parent = null);
+endclass : frame_driver
  
-function frame_monitor::new(string name = "frame_monitor", uvm_component parent = null);
-    super.new(name, parent); //create monitor
-    
+function frame_driver::new(string name = "frame_driver", uvm_component parent = null);
+    //create driver
+    super.new(name, parent); 
+    //create info
     `uvm_info(get_type_name(), "created", UVM_LOW)
 endfunction : new
 
-`endif //FRAME_MONITOR_SV
+`endif //FRAME_DRIVER_SV
