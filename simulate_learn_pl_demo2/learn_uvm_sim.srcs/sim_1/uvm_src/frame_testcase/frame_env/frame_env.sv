@@ -29,10 +29,18 @@ class frame_env extends uvm_env;
     frame_agent       i_agt; //input agent
     frame_agent       o_agt; //output agent
  
+    // --------------------------------------------------------------------
+    // add TLM 
+    uvm_tlm_analysis_fifo  #(frame_transaction) agt_scb_fifo;   //my_monitor
+    uvm_tlm_analysis_fifo  #(frame_transaction) agt_refm_fifo;   //my_drive
+    uvm_tlm_analysis_fifo  #(frame_transaction) refm_scb_fifo;   //my_model
+    
+    
     `uvm_component_utils(frame_env) //init ENV
  
     extern function      new(string name = "frame_env", uvm_component parent = null); //override new
     extern function void build_phase(uvm_phase phase); //override build phase
+    extern function void connect_phase(uvm_phase phase); //add connect
 endclass : frame_env
  
 function frame_env::new(string name = "frame_env", uvm_component parent = null);
@@ -55,6 +63,23 @@ function void frame_env::build_phase(uvm_phase phase);
     i_agt.is_active = agt_cfg.i_agt_is_active;           //agent mode init
     o_agt = frame_agent::type_id::create("o_agt", this); //create output agent
     o_agt.is_active = agt_cfg.o_agt_is_active; //agent mode init
+    
+    //add tlm connect
+    agt_scb_fifo = new("agt_scb_fifo",this);
+    agt_refm_fifo = new("agt_refm_fifo",this);
+    refm_scb_fifo = new(" refm_scb_fifo",this);
+    
 endfunction : build_phase
+function void frame_env::connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    //env connect fifo 
+    i_agt.ap.connect(agt_refm_fifo.analysis_export);
+    refm.port.connect(agt_refm_fifo.blocking_get_export);
+    refm.ap.connect(refm_scb_fifo.analysis_export);
+    scb.exp_port.connect(refm_scb_fifo.blocking_get_export);
+    o_agt.ap.connect(agt_scb_fifo.analysis_export);
+    scb.act_port.connect(agt_scb_fifo.blocking_get_export);
+    
+endfunction: connect_phase
 
 `endif //FRAME_ENV_SV

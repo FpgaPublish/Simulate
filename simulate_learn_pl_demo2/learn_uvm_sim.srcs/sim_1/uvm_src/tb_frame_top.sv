@@ -28,7 +28,7 @@ import uvm_pkg::*;
 // user head file
 `include "frame_pkg.svh"
 
-module tb_frame_top #(
+module tb_frame_top#(
     
    )(
     
@@ -39,14 +39,51 @@ module tb_frame_top #(
 bit w_sys_clk    = 0;
 bit w_sys_resetn = 0;
 //sys clock generate
-always#5 w_sys_clk = ~w_sys_clk;
+always  #5 w_sys_clk = ~w_sys_clk;
 initial #100 w_sys_resetn = 100;
 // ==========================================================
 // interface
 shk_interface u_shk_interface(
     .i_sys_clk    (w_sys_clk  ),
-    .i_sys_resetn(w_sys_resetn)
+    .i_sys_resetn (w_sys_resetn)
 );
+
+// ==========================================================
+// add DUT
+wire w_spi_port_csns ;
+wire w_spi_port_sclk ;
+wire w_spi_port_mosi ;
+wire w_spi_port_miso ;
+wire [4-1:0] w_err_shk_info1 ;
+shk_spi_driv#(
+    .MD_SIM_ABLE     ( 0    ),
+    .MD_SPI_VOLT     ( 2'b0 ),
+    .NB_SPD_LEVEL    ( 1000 ),
+    .NB_CLK_START    ( 100  ),
+    .NB_CLK_PLUSE    ( 40   ),
+    .NB_CLK_IDLES    ( 20   ),
+    .NB_CLK_NUMBE    ( 9    ),
+    .WD_SHK_ADR      ( 16   ),
+    .WD_SHK_DAT      ( 16   ),
+    .WD_ERR_INFO     ( 4    )
+)u_shk_spi_driv(
+    .i_sys_clk       ( w_sys_clk       ),
+    .i_sys_rst_n     ( w_sys_resetn    ),
+    .s_shk_spi_valid ( u_shk_interface.w_shk_valid ),
+    .s_shk_spi_maddr ( u_shk_interface.w_shk_maddr ),
+    .s_shk_spi_mdata ( u_shk_interface.w_shk_mdata ),
+    .s_shk_spi_msync ( u_shk_interface.w_shk_msync ),
+    .s_shk_spi_ready ( u_shk_interface.w_shk_ready ),
+    .s_shk_spi_saddr ( u_shk_interface.w_shk_saddr ),
+    .s_shk_spi_sdata ( u_shk_interface.w_shk_sdata ),
+    .s_shk_spi_ssync ( u_shk_interface.w_shk_ssync ),
+    .m_spi_port_csns ( w_spi_port_csns ),
+    .m_spi_port_sclk ( w_spi_port_sclk ),
+    .m_spi_port_mosi ( w_spi_port_mosi ),
+    .m_spi_port_miso ( w_spi_port_miso ),
+    .m_err_shk_info1 ( w_err_shk_info1 )
+);
+
 
 // ==========================================================
 // uvm start work
